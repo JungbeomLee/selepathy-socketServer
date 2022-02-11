@@ -1,3 +1,5 @@
+const e = require('express');
+
 var app = require('express')();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
@@ -5,8 +7,13 @@ var io = require('socket.io')(server);
 app.set('view engine', 'ejs'); // 렌더링 엔진 모드를 ejs로 설정
 app.set('views',  __dirname + '/views');    // ejs이 있는 폴더를 지정
 
-app.get('/', (req, res) => {
-    res.render('index');    // index.ejs을 사용자에게 전달
+app.get('/chating', (req, res) => {
+    if(req.session.logined){
+        res.render('index');    
+    }else{
+        res.render('fail');   
+    }
+    
 })
 
 io.on('connection', (socket) => {   //연결이 들어오면 실행되는 이벤트
@@ -25,6 +32,6 @@ io.on('connection', (socket) => {   //연결이 들어오면 실행되는 이벤
     });
 });
 
-server.listen(3000, function() {
-  console.log('Listening on http://localhost:3000/');
+server.listen(3001, function() {
+  console.log('Listening on http://localhost:3001/');
 });
