@@ -8,13 +8,10 @@ app.set('view engine', 'ejs'); // 렌더링 엔진 모드를 ejs로 설정
 app.set('views',  __dirname + '/views');    // ejs이 있는 폴더를 지정
 
 app.get('/chating', (req, res) => {
-    if(req.session.logined){
         res.render('index');    
-    }else{
-        res.render('fail');   
     }
     
-})
+)
 
 io.on('connection', (socket) => {   //연결이 들어오면 실행되는 이벤트
     // socket 변수에는 실행 시점에 연결한 상대와 연결된 소켓의 객체가 들어있다.
@@ -28,7 +25,7 @@ io.on('connection', (socket) => {   //연결이 들어오면 실행되는 이벤
         console.log('Message received: ' + msg);
 
         // io.emit으로 연결된 모든 소켓들에 신호를 보낼 수 있다.
-        io.emit('message', msg);
+        socket.broadcast.emit('message', msg);
     });
 });
 
