@@ -6,11 +6,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>전음</title>
-	<style>
-	.endline {
-		page-break-before: always
-	}
-	</style>
 	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
 	<script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
@@ -36,13 +31,21 @@
 	
 	li {
 		text-align: right;
+		list-style: none;
+		font-size: large;
+
 	}
 	
 	body::-webkit-scrollbar {
 		display: none;
 		/* Chrome, Safari, Opera*/
 	}
-	
+	ol{
+		list-style: none;
+		padding-left: 0px;
+		font-size: large;
+
+	}
 	#container {
 		background: #333;
 		color: #e8e8e8;
@@ -56,10 +59,12 @@
 	}
 	
 	#chatBox {
-		max-height: 85vh;
+		height: 85vh;
 		min-width: 20rem;
 		overflow: auto;
-		overflow-x: hidden
+		overflow-x: hidden;
+		word-break:break-word;
+
 	}
 	
 	#chatBox::-webkit-scrollbar {
@@ -174,7 +179,7 @@
 				<div class="myChat-back">
 					<form id="msgform">
 						<input id="msginput" autocomplete="off" type="text" class="myChat">
-						<button type="submit" class="circle"><i class="uil uil-message"></button>
+						<button type="submit" class="circle"><i class="uil uil-message"> </i></button>
             </form>
               
             </div>
@@ -182,7 +187,7 @@
                 var first_Name = ["신비한","이상한","요상한","일그러진","매혹적인","명섭적인","오징어같은","냄새나는","유명한","신형만"];
                 var Last_Name = ["강아지","고양이","코뿔소","하마","오징어","여우","늑대","스컹크","하마","원숭이"];
                 var autoScroll = document.getElementById("container");
-              
+				var autoScrol = document.getElementById("chatBox");
             
                 $("#myChat").on("keyup", function () {
                   if (window.event.keyCode == 13) {
@@ -201,6 +206,7 @@
         </div>
          <script src="/socket.io/socket.io.js"></script>
             <script>
+				licount=0;
                 var socket = io();
                 var msgform = document.getElementById('msgform');
                 // socket.on 함수로 서버에서 전달하는 신호를 수신
@@ -214,14 +220,20 @@
                 // 메시지 수신시 HTML에 메시지 내용 작성
                 socket.on('message', (msg) => {
                     var messageList = document.getElementById('messages');
-                    var messageTag = document.createElement("p");
+                    var messageTag = document.createElement("li");
                     messageTag.innerText = msg;
                     messageList.appendChild(messageTag);
+					licount++;
+					console.log(licount);
+
+					autoScrol.scrollTop = autoScroll.scrollHeight;
+
                 });
-        
+				
                 msgform.onsubmit = (e) => {
                     
-                    e.preventDefault();
+					
+					e.preventDefault();
                     var msginput = document.getElementById('msginput');
                     var messageList = document.getElementById('messages');
                     var messageTag = document.createElement("li");
@@ -232,8 +244,12 @@
                     socket.emit('message', msginput.value);
                     msginput.value = "";
                     var autoScroll = document.getElementById("chatBox");
-                    autoScroll.scrollTop = autoScroll.scrollHeight;
+                    autoScrol.scrollTop = autoScroll.scrollHeight;
                     
                     
+				var li= document.getElementsByTagName("li");
+				
+				licount++;
+				console.log(licount);
                 };  
             </script>
