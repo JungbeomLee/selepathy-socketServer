@@ -1,65 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-    
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>전음</title>
-    <style>
-        .endline{page-break-before:always}
-        </style>
-        
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-		<link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
-    <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        @import url(https://fonts.googleapis.com/css?family=Lato);
- * {
-	 box-sizing: border-box;
-}
-html{
-    height: 100%;
-}
-body{
-        align-items : center;
-        height: 100%;
-        overflow: visible;
-        background-image:url('https://yhw-back-img.s3.ap-northeast-2.amazonaws.com/background-image.png') ;
-        background-repeat : no-repeat;
-        background-size : cover;
-        
-    }
-li{
-    text-align: right;
-}
-body::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera*/
-}
-#container {
-   background: #333;
-	 color: #e8e8e8;
-	 width: 50%;
-	 min-height: 100vh;
-	 min-width: 20rem;
-	 margin: 1em auto;
-	 border-radius: 8px;
-	 padding: 1.5rem;
-	 font-family: 'Lato', sans-serif;
-     overflow: auto;
-     overflow-x: hidden
-}
-#chatBox{
-  max-height: 85vh;
-	min-width: 20rem;
- 
-}
-#container::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera*/
-}
- /* #container .message {
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>전음</title>
+	<style>
+	.endline {
+		page-break-before: always
+	}
+	</style>
+	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+	<script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<style>
+	@import url(https://fonts.googleapis.com/css?family=Lato);
+	* {
+		box-sizing: border-box;
+	}
+	
+	html {
+		height: 100%;
+	}
+	
+	body {
+		align-items: center;
+		height: 100%;
+		overflow: visible;
+		background-image: url('https://yhw-back-img.s3.ap-northeast-2.amazonaws.com/background-image.png');
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+	
+	li {
+		text-align: right;
+	}
+	
+	body::-webkit-scrollbar {
+		display: none;
+		/* Chrome, Safari, Opera*/
+	}
+	
+	#container {
+		background: #333;
+		color: #e8e8e8;
+		width: 50%;
+		min-height: 100vh;
+		min-width: 20rem;
+		margin: 1em auto;
+		border-radius: 8px;
+		padding: 1.5rem;
+		font-family: 'Lato', sans-serif;
+	}
+	
+	#chatBox {
+		max-height: 85vh;
+		min-width: 20rem;
+		overflow: auto;
+		overflow-x: hidden
+	}
+	
+	#chatBox::-webkit-scrollbar {
+		display: none;
+		/* Chrome, Safari, Opera*/
+	}
+	
+	#container::-webkit-scrollbar {
+		display: none;
+		/* Chrome, Safari, Opera*/
+	}
+	/* #container .message {
 	 display: flex;
 	 flex-direction: horizontal;
 	 margin: 1.5rem 0;
@@ -84,7 +96,7 @@ body::-webkit-scrollbar {
 	 margin-left: 2rem;
 	 margin-right: 0;
 } */
- /* #contents {
+	/* #contents {
 	 margin-right: 0;
 	 margin-left: calc(4rem - 1rem - 0.5rem);
 	 background: #17191c;
@@ -96,65 +108,73 @@ body::-webkit-scrollbar {
 	 left: auto;
 	 right: calc(4rem + 2rem - 0.75rem/2);
 } */
-.logout{
-  float: right;
-  margin-top: 0.5vh;
-  margin-right: 5vh;
-}
-.myChat{
-  position: absolute;
-  min-width: 86%;
-  min-height: 70%;
-  margin-left: 0%;
-  height: 7%;
-  bottom: 0;
-  border:0 solid black;
-  word-break:break-all;
-  z-index: 2;
-  margin-bottom: 1.4%;
-  margin-left: 1.4%;
-}
-.circle {
-  position: absolute;
-  margin: 0;
-  text-align: center;
-  margin: 0 auto;
-  background-color: black;
-  min-width: 4.2rem;
-  min-height: 4.2rem;
-  line-height: 4.2rem;
-  color: white;
-  font-size: 2.8rem;
-  border-radius: 50%;
-  margin-left: 90%;
-  margin-bottom: 1.5%;
-  bottom: 0;
-  z-index: 2;
-}
-.myChat-back{
-  position: absolute;
-  background-color: gray;
-  bottom: 0%;
-  margin-bottom: -0.85%;
-  margin-left: -1.23%;
-  min-width: 49.55%;
-  min-height: 10%;
-  border-radius: 0 0 8px 8px
-}
- 
-    </style>
+	
+	.logout {
+		float: right;
+		margin-top: 0.5vh;
+		margin-right: 5vh;
+	}
+	
+	.myChat {
+		position: absolute;
+		min-width: 86%;
+		min-height: 70%;
+		margin-left: 0%;
+		height: 7%;
+		bottom: 0;
+		border: 0 solid black;
+		word-break: break-all;
+		z-index: 2;
+		margin-bottom: 1.4%;
+		margin-left: 1.4%;
+	}
+	
+	.circle {
+		position: absolute;
+		margin: 0;
+		text-align: center;
+		margin: 0 auto;
+		background-color: black;
+		min-width: 4.2rem;
+		min-height: 4.2rem;
+		line-height: 4.2rem;
+		color: white;
+		font-size: 2.8rem;
+		border-radius: 50%;
+		margin-left: 90%;
+		margin-bottom: 1.5%;
+		bottom: 0;
+		z-index: 2;
+	}
+	
+	.myChat-back {
+		position: absolute;
+		background-color: gray;
+		bottom: 0%;
+		margin-bottom: -0.85%;
+		margin-left: -1.23%;
+		min-width: 49.55%;
+		min-height: 10%;
+		border-radius: 0 0 8px 8px
+	}
+	</style>
 </head>
+
 <body>
-  <form class="logout" action="/logout" method="POST">
-    <button type="submit">Logout</button>
-  </form>
-    <div id="container">
-        <div id="backcolor">
-            <div id="contents " ></div>
-            <div class="myChat-back">
-               <form id="msgform">
-                <input id="msginput" autocomplete="off" type="text" class="myChat">
-                <button type="submit" class="circle"><i class="uil uil-message"></button>
+	<form class="logout" action="/logout" method="POST">
+		<button type="submit">Logout</button>
+	</form>
+	<div id="container">
+		<div id="backcolor">
+			<div id="chatBox">
+				<ul id="messages" type="none">
+					<li id="usercount"></li>
+				</ul>
+				<div id="contents "></div>
+				<div class="myChat-back">
+					<form id="msgform">
+						<input id="msginput" autocomplete="off" type="text" class="myChat">
+						<button type="submit" class="circle"><i class="uil uil-message"></button>
             </form>
               
             </div>
@@ -174,18 +194,11 @@ body::-webkit-scrollbar {
                     for(i = 0; i<=7-TextNum; i++){
                       spacebar += "ㅤ";
                     }
-                    
-                   
-                    autoScroll.scrollTop = autoScroll.scrollHeight;
                   }
                 });
               </script>
-              
-
-            </div>
-              <ul id="messages" type="none">
-                <li id="usercount"></li>
-            </ul>
+          </div>
+        </div>
          <script src="/socket.io/socket.io.js"></script>
             <script>
                 var socket = io();
@@ -201,7 +214,7 @@ body::-webkit-scrollbar {
                 // 메시지 수신시 HTML에 메시지 내용 작성
                 socket.on('message', (msg) => {
                     var messageList = document.getElementById('messages');
-                    var messageTag = document.createElement("li");
+                    var messageTag = document.createElement("p");
                     messageTag.innerText = msg;
                     messageList.appendChild(messageTag);
                 });
@@ -211,7 +224,7 @@ body::-webkit-scrollbar {
                     e.preventDefault();
                     var msginput = document.getElementById('msginput');
                     var messageList = document.getElementById('messages');
-                    var messageTag = document.createElement("p");
+                    var messageTag = document.createElement("li");
                     messageTag.innerText = msginput.value;
                     messageList.appendChild(messageTag);
                     
@@ -224,5 +237,3 @@ body::-webkit-scrollbar {
                     
                 };  
             </script>
-            
-    
