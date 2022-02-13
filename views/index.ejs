@@ -172,8 +172,11 @@
 	<div id="container">
 		<div id="backcolor">
 			<div id="chatBox">
-				<ul id="messages" type="none">
+				<ul id="userNum" type="none">
 					<li id="usercount"></li>
+				</ul>
+				<ul id="messages" type="none">
+					<!-- 채팅 내용 나타남 -->
 				</ul>
 				<div id="contents "></div>
 				<div class="myChat-back">
@@ -225,8 +228,16 @@
                     messageList.appendChild(messageTag);
 					licount++;
 					console.log(licount);
-
 					autoScrol.scrollTop = autoScroll.scrollHeight;
+
+					//채팅 제거
+					var ul= document.getElementById("messages");		
+
+					var item = ul.getElementsByTagName('li');
+					if(licount == 75){
+						item[0].remove();
+						licount = 74;
+					};
 
                 });
 				
@@ -246,10 +257,19 @@
                     var autoScroll = document.getElementById("chatBox");
                     autoScrol.scrollTop = autoScroll.scrollHeight;
                     
-                    
-				var li= document.getElementsByTagName("li");
-				
-				licount++;
-				console.log(licount);
-                };  
+					var ulMe= document.getElementById("messages");
+					var liMe= document.getElementById("");
+					
+					licount++;
+					console.log(licount);
+
+					//채팅 제거
+					var ul= document.getElementById("messages");		
+
+					var item = ul.getElementsByTagName('li');
+					if(licount == 75){
+						item[0].remove();
+						licount = 74;
+					};
+            };  
             </script>
