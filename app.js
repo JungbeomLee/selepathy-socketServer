@@ -1,6 +1,5 @@
 const e = require('express');
 const { userInfo } = require('os');
-
 var app = require('express')();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
@@ -8,16 +7,23 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 app.set('view engine', 'ejs'); // 렌더링 엔진 모드를 ejs로 설정
 app.set('views',  __dirname + '/views');    // ejs이 있는 폴더를 지정
+var fileStoreOptions = {
+    path: "../selepathy_project-main-server/sessions"};
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    store: new FileStore(fileStoreOptions)
+}));
 
-
-
+let i =0;
 app.get('/chating', (req, res) => {
-    console.log(req.session.logined)    
-    res.render('index');    
-    }
-    
-)
 
+        if(req.session.logined){
+            res.render('index'); 
+        }
+    }
+)
 
 io.on('connection', (socket) => {   //연결이 들어오면 실행되는 이벤트
     // socket 변수에는 실행 시점에 연결한 상대와 연결된 소켓의 객체가 들어있다.

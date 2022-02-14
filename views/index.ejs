@@ -165,7 +165,7 @@
 </head>
 
 <body >
-	<form class="logout" action="/logout" method="POST">
+	<form class="logout" action="http://localhost:3000/logout" method="POST">
 		<button type="submit">Logout</button>
 	</form>
 	<div id="container">
@@ -204,6 +204,7 @@
                     userCounter.innerText = "현재 " + count + "명이 서버에 접속해있습니다.";
                     
                 }); 
+                
                 
 
                 // 메시지 수신시 HTML에 메시지 내용 작성
