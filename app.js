@@ -9,6 +9,8 @@ const FileStore = require('session-file-store')(session);
 app.set('view engine', 'ejs'); // 렌더링 엔진 모드를 ejs로 설정
 app.set('views',  __dirname + '/views');    // ejs이 있는 폴더를 지정
 
+
+
 app.get('/chating', (req, res) => {
     console.log(req.session.logined)    
     res.render('index');    
