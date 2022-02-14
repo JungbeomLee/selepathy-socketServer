@@ -189,10 +189,9 @@
         </div>
          <script src="/socket.io/socket.io.js"></script>
             <script>
-                var first_Name = ["신비한","이상한","요상한","일그러진","매혹적인","명섭적인","오징어같은","냄새나는","유명한","신형만"];
+                 var first_Name = ["신비한","이상한","요상한","일그러진","매혹적인","명섭적인","오징어같은","냄새나는","유명한","신형만"];
                 var Last_Name = ["강아지","고양이","코뿔소","하마","오징어","여우","늑대","스컹크","하마","원숭이"];
-                var autoScroll = document.getElementById("container");
-				var autoScrol = document.getElementById("chatBox");
+              
                 
 				licount=0;
                 var socket = io();
@@ -230,7 +229,7 @@
 					var item = ul.getElementsByTagName('li');
 					if(licount == 75){
 						item[0].remove();
-						item[0].remove();
+                        item[0].remove();
 						licount = 74;
 					};
 
@@ -269,7 +268,7 @@
 
 					var item = ul.getElementsByTagName('li');
 					if(licount == 75){
-						item[0].remove();
+                        item[0].remove();
 						item[0].remove();
 						licount = 74;
 					};
