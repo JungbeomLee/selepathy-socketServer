@@ -1,4 +1,5 @@
 const e = require('express');
+const { userInfo } = require('os');
 
 var app = require('express')();
 var server = require('http').createServer(app);
@@ -15,9 +16,10 @@ app.get('/chating', (req, res) => {
 
 io.on('connection', (socket) => {   //연결이 들어오면 실행되는 이벤트
     // socket 변수에는 실행 시점에 연결한 상대와 연결된 소켓의 객체가 들어있다.
-    
-    //socket.emit으로 현재 연결한 상대에게 신호를 보낼 수 있다.
     socket.emit('usercount', io.engine.clientsCount);
+    //socket.emit으로 현재 연결한 상대에게 신호를 보낼 수 있다.
+    setInterval(()=>{socket.emit('usercount', io.engine.clientsCount);},1000)
+    
 
     // on 함수로 이벤트를 정의해 신호를 수신할 수 있다.
     socket.on('message', (msg) => {

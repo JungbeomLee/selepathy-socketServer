@@ -19,12 +19,15 @@
 	html {
 		height: 100%;
 	}
-	
+	.you{
+        
+        text-align: left;
+    }
 	body {
 		align-items: center;
 		height: 100%;
 		overflow: visible;
-		background-image: url('https://yhw-back-img.s3.ap-northeast-2.amazonaws.com/background-image.png');
+		background-image: url('https://smproject-background-img.s3.ap-northeast-2.amazonaws.com/background-image.png');
 		background-repeat: no-repeat;
 		background-size: cover;
 	}
@@ -40,17 +43,11 @@
 		display: none;
 		/* Chrome, Safari, Opera*/
 	}
-	ol{
-		list-style: none;
-		padding-left: 0px;
-		font-size: large;
-
-	}
 	#container {
 		background: #333;
 		color: #e8e8e8;
 		width: 50%;
-		min-height: 100vh;
+		min-height: 80vh;
 		min-width: 20rem;
 		margin: 1em auto;
 		border-radius: 8px;
@@ -132,6 +129,7 @@
 		z-index: 2;
 		margin-bottom: 1.4%;
 		margin-left: 1.4%;
+        font-size: 1.5rem;
 	}
 	
 	.circle {
@@ -148,24 +146,25 @@
 		border-radius: 50%;
 		margin-left: 90%;
 		margin-bottom: 1.5%;
-		bottom: 0;
+		bottom: 0px;
 		z-index: 2;
 	}
 	
 	.myChat-back {
 		position: absolute;
 		background-color: gray;
-		bottom: 0%;
+		bottom: 30px;
 		margin-bottom: -0.85%;
 		margin-left: -1.23%;
 		min-width: 49.55%;
 		min-height: 10%;
 		border-radius: 0 0 8px 8px
+
 	}
 	</style>
 </head>
 
-<body>
+<body >
 	<form class="logout" action="/logout" method="POST">
 		<button type="submit">Logout</button>
 	</form>
@@ -181,34 +180,19 @@
 				<div id="contents "></div>
 				<div class="myChat-back">
 					<form id="msgform">
-						<input id="msginput" autocomplete="off" type="text" class="myChat">
+						<input id="msginput" autocomplete="off" type="text" class="myChat" required>
 						<button type="submit" class="circle"><i class="uil uil-message"> </i></button>
             </form>
               
             </div>
-              <script>
-                var first_Name = ["신비한","이상한","요상한","일그러진","매혹적인","명섭적인","오징어같은","냄새나는","유명한","신형만"];
-                var Last_Name = ["강아지","고양이","코뿔소","하마","오징어","여우","늑대","스컹크","하마","원숭이"];
-                var autoScroll = document.getElementById("container");
-				var autoScrol = document.getElementById("chatBox");
-            
-                $("#myChat").on("keyup", function () {
-                  if (window.event.keyCode == 13) {
-                    var random_Number1 = Math.floor(Math.random()*10)
-                    var random_Number2 = Math.floor(Math.random()*10)
-                    var TextNum = first_Name[random_Number1].length + Last_Name[random_Number2].length
-                    var spacebar = "";
-            
-                    for(i = 0; i<=7-TextNum; i++){
-                      spacebar += "ㅤ";
-                    }
-                  }
-                });
-              </script>
           </div>
         </div>
          <script src="/socket.io/socket.io.js"></script>
             <script>
+                 var first_Name = ["신비한","이상한","요상한","일그러진","매혹적인","명섭적인","오징어같은","냄새나는","유명한","신형만"];
+                var Last_Name = ["강아지","고양이","코뿔소","하마","오징어","여우","늑대","스컹크","하마","원숭이"];
+              
+                
 				licount=0;
                 var socket = io();
                 var msgform = document.getElementById('msgform');
@@ -217,17 +201,25 @@
                 socket.on('usercount', (count) => {
                     
                     var userCounter = document.getElementById('usercount');
-                    userCounter.innerText = "현재 " + count / 2+ "명이 서버에 접속해있습니다.";
-                });
-        
+                    userCounter.innerText = "현재 " + count + "명이 서버에 접속해있습니다.";
+                    
+                }); 
+                
+
                 // 메시지 수신시 HTML에 메시지 내용 작성
                 socket.on('message', (msg) => {
+                    var random_Number1 = Math.floor(Math.random()*10)
+                    var random_Number2 = Math.floor(Math.random()*10)
                     var messageList = document.getElementById('messages');
+                    var messageName = document.createElement("li");
                     var messageTag = document.createElement("li");
+                    messageName.className='you'
+                    messageTag.className='you'
+                    messageName.innerText = `${first_Name[random_Number1]} ${Last_Name[random_Number2]}`
+                    messageList.appendChild(messageName);
                     messageTag.innerText = msg;
                     messageList.appendChild(messageTag);
-					licount++;
-					console.log(licount);
+                    licount++;
 					autoScrol.scrollTop = autoScroll.scrollHeight;
 
 					//채팅 제거
@@ -245,9 +237,15 @@
                     
 					
 					e.preventDefault();
+                    var random_Number1 = Math.floor(Math.random()*10)
+                    var random_Number2 = Math.floor(Math.random()*10)
                     var msginput = document.getElementById('msginput');
                     var messageList = document.getElementById('messages');
+                    var messageName = document.createElement("li");
                     var messageTag = document.createElement("li");
+                    
+                    messageName.innerText = `${first_Name[random_Number1]} ${Last_Name[random_Number2]}`
+                    messageList.appendChild(messageName);
                     messageTag.innerText = msginput.value;
                     messageList.appendChild(messageTag);
                     
