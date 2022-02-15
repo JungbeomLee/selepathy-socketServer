@@ -18,9 +18,11 @@ app.use(session({
 
 let i =0;
 app.get('/chating', (req, res) => {
-
+        console.log(req.session.user_name)
         if(req.session.logined){
-            res.render('index'); 
+            res.render('index',{
+               name:req.session.user_name
+            }); 
         }
     }
 )

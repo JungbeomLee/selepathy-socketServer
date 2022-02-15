@@ -1,276 +1,418 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>전음</title>
-	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
-	<script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<style>
-	@import url(https://fonts.googleapis.com/css?family=Lato);
-	* {
-		box-sizing: border-box;
-	}
-	
-	html {
-		height: 100%;
-	}
-	.you{
-        
-        text-align: left;
-    }
-	body {
-		align-items: center;
-		height: 100%;
-		overflow: visible;
-		background-image: url('https://smproject-background-img.s3.ap-northeast-2.amazonaws.com/background-image.png');
-		background-repeat: no-repeat;
-		background-size: cover;
-	}
-	
-	li {
-		text-align: right;
-		list-style: none;
-		font-size: large;
-
-	}
-	
-	body::-webkit-scrollbar {
-		display: none;
-		/* Chrome, Safari, Opera*/
-	}
-	#container {
-		background: #333;
-		color: #e8e8e8;
-		width: 50%;
-		min-height: 80vh;
-		min-width: 20rem;
-		margin: 1em auto;
-		border-radius: 8px;
-		padding: 1.5rem;
-		font-family: 'Lato', sans-serif;
-	}
-	
-	#chatBox {
-		height: 85vh;
-		min-width: 20rem;
-		overflow: auto;
-		overflow-x: hidden;
-		word-break:break-word;
-
-	}
-	
-	#chatBox::-webkit-scrollbar {
-		display: none;
-		/* Chrome, Safari, Opera*/
-	}
-	
-	#container::-webkit-scrollbar {
-		display: none;
-		/* Chrome, Safari, Opera*/
-	}
-	/* #container .message {
-	 display: flex;
-	 flex-direction: horizontal;
-	 margin: 1.5rem 0;
-	 position: relative;
-}
- #container .message .picture {
-	 background: #666;
-	 width: 4rem;
-	 height: 4rem;
-	 border-radius: 50%;
-	 margin-right: 2rem;
-	 line-height: 4rem;
-	 vertical-align: bottom;
-	 font-size: 2rem;
-	 font-weight: bold;
-	 text-align: center;
-}
- #container .mine {
-	 flex-direction: row-reverse;
-}
- #container .mine .picture {
-	 margin-left: 2rem;
-	 margin-right: 0;
-} */
-	/* #contents {
-	 margin-right: 0;
-	 margin-left: calc(4rem - 1rem - 0.5rem);
-	 background: #17191c;
-   border-radius: 4px;
-}
- #contents::before {
-	 position: absolute;
-	 background: #17191c;
-	 left: auto;
-	 right: calc(4rem + 2rem - 0.75rem/2);
-} */
-	
-	.logout {
-		float: right;
-		margin-top: 0.5vh;
-		margin-right: 5vh;
-	}
-	
-	.myChat {
-		position: absolute;
-		min-width: 86%;
-		min-height: 70%;
-		margin-left: 0%;
-		height: 7%;
-		bottom: 0;
-		border: 0 solid black;
-		word-break: break-all;
-		z-index: 2;
-		margin-bottom: 1.4%;
-		margin-left: 1.4%;
-        font-size: 1.5rem;
-	}
-	
-	.circle {
-		position: absolute;
-		margin: 0;
-		text-align: center;
-		margin: 0 auto;
-		background-color: black;
-		min-width: 4.2rem;
-		min-height: 4.2rem;
-		line-height: 4.2rem;
-		color: white;
-		font-size: 2.8rem;
-		border-radius: 50%;
-		margin-left: 90%;
-		margin-bottom: 1.5%;
-		bottom: 0px;
-		z-index: 2;
-	}
-	
-	.myChat-back {
-		position: absolute;
-		background-color: gray;
-		bottom: 30px;
-		margin-bottom: -0.85%;
-		margin-left: -1.23%;
-		min-width: 49.55%;
-		min-height: 10%;
-		border-radius: 0 0 8px 8px
-
-	}
-	</style>
-</head>
-
-<body >
-	<form class="logout" action="http://localhost:3000/logout" method="POST">
-		<button type="submit">Logout</button>
-	</form>
-	<div id="container">
-		<div id="backcolor">
-			<div id="chatBox">
-				<ul id="userNum" type="none">
-					<li id="usercount"></li>
-				</ul>
-				<ul id="messages" type="none">
-					<!-- 채팅 내용 나타남 -->
-				</ul>
-				<div id="contents "></div>
-				<div class="myChat-back">
-					<form id="msgform">
-						<input id="msginput" autocomplete="off" type="text" class="myChat" required>
-						<button type="submit" class="circle"><i class="uil uil-message"> </i></button>
-            </form>
-              
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>전음</title>
+      <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+      <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+      <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <style>
+         @import url(https://fonts.googleapis.com/css?family=Lato);
+         * {
+         box-sizing: border-box;
+         }
+         .switch {
+         display: inline-block;
+         height: 34px;
+         position: relative;
+         width: 60px;
+         }
+         .switch input {
+         display:none;
+         }
+         .toggle{
+         width: 120px;
+         display: flex;
+         align-items: center;
+        justify-content: space-between
+         
+         }
+         .toggle p{
+         color: white;
+         display: inline-block;
+         margin: 0;
+         }
+         .toggle > div {
+             display: inline-block;
+             align-items: center;
+         }
+         .slider {
+         background-color: #ccc;
+         bottom: 0;
+         cursor: pointer;
+         left: 0;
+         position: absolute;
+         right: 0;
+         top: 0;
+         transition: .4s;
+         }
+         .slider:before {
+         background-color: #fff;
+         bottom: 4px;
+         content: "";
+         height: 26px;
+         left: 4px;
+         position: absolute;
+         transition: .4s;
+         width: 26px;
+         }
+         input:checked + .slider {
+         background-color: #66bb6a;
+         }
+         input:checked + .slider:before {
+         transform: translateX(26px);
+         }
+         .slider.round {
+         border-radius: 34px;
+         }
+         .slider.round:before {
+         border-radius: 50%;
+         }
+         #usercount{
+         display: inline;
+         }
+         html {
+         height: 100%;
+         }
+         .you{
+         text-align: left;
+         }
+         body {
+         align-items: center;
+         height: 100%;
+         overflow: visible;
+         background-image: url('https://smproject-background-img.s3.ap-northeast-2.amazonaws.com/background-image.png');
+         background-repeat: no-repeat;
+         background-size: cover;
+         }
+         li {
+         text-align: right;
+         list-style: none;
+         font-size: large;
+         }
+         body::-webkit-scrollbar {
+         display: none;
+         /* Chrome, Safari, Opera*/
+         }
+         #container {
+         background: #333;
+         color: #e8e8e8;
+         width: 50%;
+         min-height: 80vh;
+         min-width: 20rem;
+         margin: 1em auto;
+         border-radius: 8px;
+         padding: 1.5rem;
+         font-family: 'Lato', sans-serif;
+         }
+         #chatBox {
+         height: 85vh;
+         min-width: 20rem;
+         overflow: auto;
+         overflow-x: hidden;
+         word-break:break-word;
+         }
+         #chatBox::-webkit-scrollbar {
+         display: none;
+         /* Chrome, Safari, Opera*/
+         }
+         #userNum{
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         margin-bottom: 24px;
+         }
+         #container::-webkit-scrollbar {
+         display: none;
+         /* Chrome, Safari, Opera*/
+         }
+         .logout {
+         float: right;
+         margin-top: 0.5vh;
+         margin-right: 5vh;
+         }
+         .myChat {
+         position: absolute;
+         min-width: 86%;
+         min-height: 70%;
+         margin-left: 0%;
+         height: 7%;
+         bottom: 0;
+         border: 0 solid black;
+         word-break: break-all;
+         z-index: 2;
+         margin-bottom: 1.4%;
+         margin-left: 1.4%;
+         font-size: 1.5rem;
+         }
+         .circle {
+         position: absolute;
+         margin: 0;
+         text-align: center;
+         margin: 0 auto;
+         background-color: black;
+         min-width: 4.2rem;
+         min-height: 4.2rem;
+         line-height: 4.2rem;
+         color: white;
+         font-size: 2.8rem;
+         border-radius: 50%;
+         margin-left: 90%;
+         margin-bottom: 1.5%;
+         bottom: 0px;
+         z-index: 2;
+         }
+         .myChat-back {
+         position: absolute;
+         background-color: gray;
+         bottom: 30px;
+         margin-bottom: -0.85%;
+         margin-left: -1.23%;
+         min-width: 49.55%;
+         min-height: 10%;
+         border-radius: 0 0 8px 8px
+         }
+         .dropbtn {
+         font-size: 16px;
+         border: none;
+         text-align: center;
+         color: white;
+         }
+         .dropbtn img{
+         width: 2rem;
+         height: 2rem;
+         }
+         .uil{
+         margin-bottom: 100px;
+         }
+         .dropdown {
+         position: relative;
+         display: inline-block;
+         }
+         .dropdown-content {
+         display: none;
+         position: absolute;
+         min-width: 200px;
+         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+         z-index: 1;
+         border: solid 2px black;
+         text-align: center;
+         background-color: dimgrey;
+         right: 69px;
+         }
+         .dropdown-content a:hover{
+         background-color: #333;
+         }
+         .dropdown-content button:hover > a{
+         background-color: #333;
+         }
+         .dropdown-content button{
+         color: white;
+         text-align: center;
+         font-size: 16px;
+         height: 3rem;
+         min-width: 200px;
+         background-color: dimgrey;
+         border: 0;
+         }
+         .dropdown button:hover{
+         background-color: #333;
+         }
+         .dropdown-content p{
+         color: white;
+         border-bottom: solid 2px gray;
+         padding-bottom: 10px;
+         padding-top: 10px;
+         margin: 0;
+         }
+         .dropdown-content a{
+         color: white;
+         min-width: 200px;
+         font-size: 16px;
+         height: 3rem;
+         padding-bottom: 10px;
+         padding-top: 10px;
+         margin: 0;
+         display: block;
+         text-decoration: none;
+         align-items: center;
+         }
+         .dropdown-content button:hover {cursor: pointer;}
+         .dropbtn:hover{cursor: pointer;}
+         line{
+         display: block;
+         border: 1px solid gray;
+         }
+      </style>
+   </head>
+   <body>
+      <!-- Drop Down Start -->
+      <form class="logout" action="http://localhost:3000/logout" method="POST">
+         <div class="dropdown">
+            <p class="dropbtn" onclick="dropdown()"><img src="https://smproject-background-img.s3.ap-northeast-2.amazonaws.com/icon.ico" alt=""><i class="uil uil-angle-down"></i></p>
+            <div class="dropdown-content">
+               <p>Signed in as <%= name %></p>
+               <a href="">회원정보</a> 
+               <button type="submit" class=" img-button">로그아웃  </button>
+               <line></line>
+               <a href="">제작자들</a>
+               <a href="">주의사항</a>
             </div>
-          </div>
-        </div>
-         <script src="/socket.io/socket.io.js"></script>
-            <script>
-                 var first_Name = ["신비한","이상한","요상한","일그러진","매혹적인","명섭적인","오징어같은","냄새나는","유명한","신형만"];
-                var Last_Name = ["강아지","고양이","코뿔소","하마","오징어","여우","늑대","스컹크","하마","원숭이"];
-              
+         </div>
+      </form>
+      <!-- Drop Down End -->
+      <form id="msgform">
+         <div id="container">
+         <div id="backcolor">
+            <div id="chatBox">
+               <ul id="userNum" type="none">
+                  <div class="toggle">
+                     <label class="switch" for="checkbox">
+                         
+                        <input type="checkbox" id="checkbox" class="anony"/>
+                        <div class="slider round"></div>
+                     </label>
+                     <p>익명</p>
+                    </div>
+                    
+                  <li id="usercount"></li>
+               </ul>
+               
+               <line></line>
+               <ul id="messages" type="none">
+                  <!-- 채팅 내용 나타남 -->
+               </ul>
+               <div id="contents "></div>
+               <div class="myChat-back">
+                  <input id="msginput" autocomplete="off" type="text" class="myChat" required>
+                  <button type="submit" class="circle"><i class="uil uil-message"> </i></button>
+      </form>
+      </div>
+      </div>
+      </div>
+      <script src="/socket.io/socket.io.js"></script>
+      <script>
+         var on = 1
+         function dropdown(){
+             console.log('click');
+             var content = document.getElementsByClassName('dropdown-content')
+         if (on == 1) {
+             content[0].style.display = 'block';
+             on = 0
+         } else {
+             content[0].style.display = 'none';
+             on = 1
+         }
+         }
+         
+         
+         
+         var first_Name = ["신비한","이상한","요상한","일그러진","매혹적인","명섭적인","오징어같은","냄새나는","유명한","신형만"];
+         var Last_Name = ["강아지","고양이","코뿔소","하마","오징어","여우","늑대","스컹크","하마","원숭이"];
+         
+         
+         licount=0;
+         var socket = io();
+         var msgform = document.getElementById('msgform');
+         // socket.on 함수로 서버에서 전달하는 신호를 수신
+         
+         socket.on('usercount', (count) => {
+             
+             var userCounter = document.getElementById('usercount');
+             userCounter.innerText = "현재 " + count + "명이 서버에 접속해있습니다.";
+             
+         }); 
+         
+         
+         
+         // 메시지 수신시 HTML에 메시지 내용 작성
+         socket.on('message', (msg) => {
+            var chk = document.getElementsByClassName('anony');
+             var random_Number1 = Math.floor(Math.random()*10)
+             var random_Number2 = Math.floor(Math.random()*10)
+             var messageList = document.getElementById('messages');
+             var messageName = document.createElement("li");
+             var messageTag = document.createElement("li");
+             messageName.className='you'
+             messageTag.className='you'
+             //익명
+             messageList.appendChild(messageName);
+             messageTag.innerText = msg;
+             messageList.appendChild(messageTag);
+             licount++;
+         autoScrol.scrollTop = autoScroll.scrollHeight;
+         
+         //채팅 제거
+         var ul= document.getElementById("messages");		
+         
+         var item = ul.getElementsByTagName('li');
+         if(licount == 75){
+         item[0].remove();
+                 item[0].remove();
+         licount = 74;
+         };
+         
+         });
+         
+         msgform.onsubmit = (e) => {
+             
+         
+         e.preventDefault();
+             var random_Number1 = Math.floor(Math.random()*10)
+             var random_Number2 = Math.floor(Math.random()*10)
+             var msginput = document.getElementById('msginput');
+             var messageList = document.getElementById('messages');
+             var messageName = document.createElement("li");
+             var messageTag = document.createElement("li");
+             var chk = document.getElementsByClassName('anony');
+            if(chk[0].checked){
+                messageName.innerText = `${first_Name[random_Number1]} ${Last_Name[random_Number2]}`
+            }else{
+                messageName.innerText = "<%= name %>"
+            }
+             //익명
+            
+             
+             //닉네임
+             
+             messageList.appendChild(messageName);
+             messageTag.innerText = msginput.value;
+             messageList.appendChild(messageTag);
+             
+             // socket.emit으로 서버에 신호를 전달
+             console.log(chk[0].checked);
+             if(chk[0].checked){
+                socket.emit('message', `${first_Name[random_Number1]} ${Last_Name[random_Number2]}` );
                 
-				licount=0;
-                var socket = io();
-                var msgform = document.getElementById('msgform');
-                // socket.on 함수로 서버에서 전달하는 신호를 수신
-                
-                socket.on('usercount', (count) => {
-                    
-                    var userCounter = document.getElementById('usercount');
-                    userCounter.innerText = "현재 " + count + "명이 서버에 접속해있습니다.";
-                    
-                }); 
-                
-                
-
-                // 메시지 수신시 HTML에 메시지 내용 작성
-                socket.on('message', (msg) => {
-                    var random_Number1 = Math.floor(Math.random()*10)
-                    var random_Number2 = Math.floor(Math.random()*10)
-                    var messageList = document.getElementById('messages');
-                    var messageName = document.createElement("li");
-                    var messageTag = document.createElement("li");
-                    messageName.className='you'
-                    messageTag.className='you'
-                    messageName.innerText = `${first_Name[random_Number1]} ${Last_Name[random_Number2]}`
-                    messageList.appendChild(messageName);
-                    messageTag.innerText = msg;
-                    messageList.appendChild(messageTag);
-                    licount++;
-					autoScrol.scrollTop = autoScroll.scrollHeight;
-
-					//채팅 제거
-					var ul= document.getElementById("messages");		
-
-					var item = ul.getElementsByTagName('li');
-					if(licount == 75){
-						item[0].remove();
-                        item[0].remove();
-						licount = 74;
-					};
-
-                });
-				
-                msgform.onsubmit = (e) => {
-                    
-					
-					e.preventDefault();
-                    var random_Number1 = Math.floor(Math.random()*10)
-                    var random_Number2 = Math.floor(Math.random()*10)
-                    var msginput = document.getElementById('msginput');
-                    var messageList = document.getElementById('messages');
-                    var messageName = document.createElement("li");
-                    var messageTag = document.createElement("li");
-                    
-                    messageName.innerText = `${first_Name[random_Number1]} ${Last_Name[random_Number2]}`
-                    messageList.appendChild(messageName);
-                    messageTag.innerText = msginput.value;
-                    messageList.appendChild(messageTag);
-                    
-                    // socket.emit으로 서버에 신호를 전달
-                    socket.emit('message', msginput.value);
-                    msginput.value = "";
-                    var autoScroll = document.getElementById("chatBox");
-                    autoScrol.scrollTop = autoScroll.scrollHeight;
-                    
-					var ulMe= document.getElementById("messages");
-					var liMe= document.getElementById("");
-					
-					licount++;
-					console.log(licount);
-
-					//채팅 제거
-					var ul= document.getElementById("messages");		
-
-					var item = ul.getElementsByTagName('li');
-					if(licount == 75){
-                        item[0].remove();
-						item[0].remove();
-						licount = 74;
-					};
-            };  
-            </script>
+             }
+             else{
+                 
+                 socket.emit('message',"<%= name %>");
+                }
+             
+             socket.emit('message',msginput.value);
+         
+             msginput.value = "";
+             var autoScroll = document.getElementById("chatBox");
+             autoScrol.scrollTop = autoScroll.scrollHeight;
+             
+         var ulMe= document.getElementById("messages");
+         var liMe= document.getElementById("");
+         
+         licount++;
+         console.log(licount);
+         
+         //채팅 제거
+         var ul= document.getElementById("messages");		
+         
+         var item = ul.getElementsByTagName('li');
+         if(licount == 75){
+                 item[0].remove();
+         item[0].remove();
+         licount = 74;
+         };
+         };  
+      </script>
