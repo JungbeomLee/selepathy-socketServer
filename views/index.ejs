@@ -119,18 +119,20 @@
 		background: #333;
 		color: #e8e8e8;
 		width: 50%;
-		min-height: 80vh;
+		height: 98.2vh;
 		min-width: 20rem;
 		margin: 1em auto;
 		border-radius: 8px;
 		padding: 1.5rem;
 		font-family: 'Lato', sans-serif;
+		box-sizing: border-box;
 	}
 	#messages{
 		padding-right: 40px;
 	}
 	#chatBox {
-		height: 78vh;
+		margin-bottom: 10px;
+		height: 75vh;
 		min-width: 20rem;
 		overflow: auto;
 		overflow-x: hidden;
@@ -162,8 +164,8 @@
 	
 	.myChat {
 		position: absolute;
-		min-width: 86%;
-		min-height: 70%;
+		min-width: 40%;
+		min-height: 7%;
 		margin-left: 0%;
 		height: 7%;
 		bottom: 0;
@@ -173,13 +175,14 @@
 		margin-bottom: 1.4%;
 		margin-left: 1.4%;
 		font-size: 1.5rem;
+		background-color: gray;
 	}
 	
 	.circle {
-		position: absolute;
 		margin: 0;
 		text-align: center;
 		margin: 0 auto;
+		border: none;
 		background-color: black;
 		min-width: 4.2rem;
 		min-height: 4.2rem;
@@ -187,23 +190,11 @@
 		color: white;
 		font-size: 2.8rem;
 		border-radius: 50%;
-		margin-left: 90%;
-		margin-bottom: 1.5%;
 		bottom: 0px;
-		z-index: 2;
+		float: right;
+		margin-right: 2vh;
+		margin-top: 1.5vh;
 	}
-	
-	.myChat-back {
-		position: absolute;
-		background-color: gray;
-		bottom: 30px;
-		margin-bottom: -3vh;
-		margin-left: -1.23%;
-		min-width: 49.55%;
-		min-height: 10%;
-		border-radius: 0 0 8px 8px
-	}
-	
 	.dropbtn {
 		font-size: 16px;
 		border: none;
@@ -293,6 +284,39 @@
 		display: block;
 		border: 1px solid gray;
 	}
+	.MychatLine {
+		display: block;
+		border: 1px solid gray;
+	}
+	.My{
+		margin-top: 0.2vh;
+		content:"";
+		display:block;
+		clear:both;
+		max-width: 65%;
+		border-radius: 8px;
+		background-color: #488C03;
+		padding: 8px 16px;
+		float: right;
+	}
+	.MyName{
+		margin-top: 1.2vh;
+		content:"";
+		display:block;
+		clear:both;
+		float: right;
+	}
+	.you{
+		content:"";
+		display:block;
+		clear:both;
+		color: white;
+		max-width: 65%;
+		border-radius: 8px;
+		background-color: #265902;
+		padding: 8px 16px;
+		float: left;
+	}
 	</style>
 </head>
 
@@ -329,9 +353,10 @@
 						<!-- 채팅 내용 나타남 -->
 					</ul>
 					<div id="contents "></div>
-					<div class="myChat-back">
-						<input id="msginput" autocomplete="off" type="text" class="myChat" required>
-						<button type="submit" class="circle"><i class="uil uil-message"> </i></button>
+				</div>
+				<line id="MychatLine"></line>
+				<input id="msginput" autocomplete="off" type="text" class="myChat" required>
+					<button type="submit" class="circle"><i class="uil uil-message"> </i></button>
 	</form>
 	</div>
 	</div>
@@ -341,6 +366,7 @@
 	var on = 1
 
 	function dropdown() {
+		//dropdown 리스트
 		console.log('click');
 		var content = document.getElementsByClassName('dropdown-content')
 		if(on == 1) {
@@ -353,11 +379,11 @@
 	}
 	var first_Name = ["신비한", "이상한", "요상한", "일그러진", "매혹적인", "명섭적인", "오징어같은", "냄새나는", "유명한", "신형만"];
 	var Last_Name = ["강아지", "고양이", "코뿔소", "하마", "오징어", "여우", "늑대", "스컹크", "하마", "원숭이"];
-   var autoScroll = document.getElementById("container");
+    var autoScroll = document.getElementById("container");
 	var autoScrol = document.getElementById("chatBox");
 	var socket = io();
 	var msgform = document.getElementById('msgform');
-   var messageMom = document.getElementById("messages")
+    var messageMom = document.getElementById("messages")
 	// socket.on 함수로 서버에서 전달하는 신호를 수신
 	socket.on('usercount', (count) => {
 		var userCounter = document.getElementById('usercount');
@@ -365,18 +391,20 @@
 	});
 	// 메시지 수신시 HTML에 메시지 내용 작성
 	socket.on('message', (msg) => {
-      var messageChild = messageMom.childElementCount
+		//상대방 채팅 내용 보내기
+        var messageChild = messageMom.childElementCount
 		var chk = document.getElementsByClassName('anony');
 		var random_Number1 = Math.floor(Math.random() * 10)
 		var random_Number2 = Math.floor(Math.random() * 10)
 		var messageList = document.getElementById('messages');
 		var messageTag = document.createElement("li");
 		messageTag.className = 'you'
-			//익명
 		messageTag.innerText = msg;
 		messageList.appendChild(messageTag);
+		//li 태그 수 세기
 		autoScrol.scrollTop = autoScroll.scrollHeight;
-      console.log(messageChild);
+        console.log(messageChild);
+
 		//채팅 제거
 		var ul = document.getElementById("messages");
 		var item = ul.getElementsByTagName('li');
@@ -387,8 +415,9 @@
 		};
 	});
 	msgform.onsubmit = (e) => {
+		//내 채팅 보내기
 		e.preventDefault();
-      var messageChild = messageMom.childElementCount
+        var messageChild = messageMom.childElementCount
 		var random_Number1 = Math.floor(Math.random() * 10)
 		var random_Number2 = Math.floor(Math.random() * 10)
 		var msginput = document.getElementById('msginput');
@@ -396,18 +425,21 @@
 		var messageName = document.createElement("li");
 		var messageTag = document.createElement("li");
 		var chk = document.getElementsByClassName('anony');
+		messageTag.className = 'My'
+		messageName.className = 'MyName'
 		if(chk[0].checked) {
 			messageName.innerText = `${first_Name[random_Number1]} ${Last_Name[random_Number2]}`
 		} else {
 			messageName.innerText = "<%= name %>"
 		}
-		//익명
-		//닉네임
+		
 		messageList.appendChild(messageName);
 		messageTag.innerText = msginput.value;
 		messageList.appendChild(messageTag);
 		// socket.emit으로 서버에 신호를 전달
 		console.log(chk[0].checked);
+
+		//익명 설정
 		if(chk[0].checked) {
 			socket.emit('message', `${first_Name[random_Number1]} ${Last_Name[random_Number2]}`);
 		} else {
@@ -418,6 +450,7 @@
 		var autoScroll = document.getElementById("chatBox");
 		autoScrol.scrollTop = autoScroll.scrollHeight;
 		console.log(messageChild);
+
 		//채팅 제거
 		var ul = document.getElementById("messages");
 		var item = ul.getElementsByTagName('li');
