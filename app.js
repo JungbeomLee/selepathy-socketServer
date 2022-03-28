@@ -34,7 +34,19 @@ io.on('connection', (socket) => {   //연결이 들어오면 실행되는 이벤
     setInterval(()=>{socket.emit('usercount', io.engine.clientsCount);},1000)
     
 
+
+
+
+    socket.on('username', (msg) => {
+        //msg에는 클라이언트에서 전송한 매개변수가 들어온다. 이러한 매개변수의 수에는 제한이 없다.
+        console.log('Message received: ' + msg);
+
+        // io.emit으로 연결된 모든 소켓들에 신호를 보낼 수 있다.
+        socket.broadcast.emit('username', msg);
+    });
     // on 함수로 이벤트를 정의해 신호를 수신할 수 있다.
+
+
     socket.on('message', (msg) => {
         //msg에는 클라이언트에서 전송한 매개변수가 들어온다. 이러한 매개변수의 수에는 제한이 없다.
         console.log('Message received: ' + msg);
@@ -42,6 +54,8 @@ io.on('connection', (socket) => {   //연결이 들어오면 실행되는 이벤
         // io.emit으로 연결된 모든 소켓들에 신호를 보낼 수 있다.
         socket.broadcast.emit('message', msg);
     });
+
+
 });
 
 server.listen(3001, function() {

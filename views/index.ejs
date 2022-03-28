@@ -306,6 +306,13 @@
 		clear:both;
 		float: right;
 	}
+	.YourName{
+		margin-top: 1.2vh;
+		content:"";
+		display:block;
+		clear:both;
+		float: left;
+	}
 	.you{
 		content:"";
 		display:block;
@@ -390,6 +397,26 @@
 		userCounter.innerText = "현재 " + count + "명이 서버에 접속해있습니다.";
 	});
 	// 메시지 수신시 HTML에 메시지 내용 작성
+	socket.on('username', (msg) => {
+		//상대방 채팅 내용 보내기
+        var messageChild = messageMom.childElementCount
+		var chk = document.getElementsByClassName('anony');
+		var random_Number1 = Math.floor(Math.random() * 10)
+		var random_Number2 = Math.floor(Math.random() * 10)
+		var messageList = document.getElementById('messages');
+		var messageTag = document.createElement("li");
+		messageTag.className = 'YourName'
+		messageTag.innerText = msg;
+		messageList.appendChild(messageTag);
+		//li 태그 수 세기
+		autoScrol.scrollTop = autoScroll.scrollHeight;
+        console.log(messageChild);
+
+		
+	});
+	
+	
+	
 	socket.on('message', (msg) => {
 		//상대방 채팅 내용 보내기
         var messageChild = messageMom.childElementCount
@@ -441,9 +468,11 @@
 
 		//익명 설정
 		if(chk[0].checked) {
-			socket.emit('message', `${first_Name[random_Number1]} ${Last_Name[random_Number2]}`);
+			
+			socket.emit('username', `${first_Name[random_Number1]} ${Last_Name[random_Number2]}`);
+
 		} else {
-			socket.emit('message', "<%= name %>");
+			socket.emit('username', "<%= name %>");
 		}
 		socket.emit('message', msginput.value);
 		msginput.value = "";
