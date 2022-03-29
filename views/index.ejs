@@ -386,7 +386,7 @@
 	}
 	var first_Name = ["신비한", "이상한", "요상한", "일그러진", "매혹적인", "명섭적인", "오징어같은", "냄새나는", "유명한", "신형만"];
 	var Last_Name = ["강아지", "고양이", "코뿔소", "하마", "오징어", "여우", "늑대", "스컹크", "하마", "원숭이"];
-    var autoScroll = document.getElementById("container");
+    var autoScroll = document.getElementById("chatBox");
 	var autoScrol = document.getElementById("chatBox");
 	var socket = io();
 	var msgform = document.getElementById('msgform');
@@ -435,10 +435,10 @@
 		//채팅 제거
 		var ul = document.getElementById("messages");
 		var item = ul.getElementsByTagName('li');
-		if(messageChild == 41) {
+		if(messageChild >= 40) {
 			item[0].remove();
 			item[0].remove();
-			licount = 39;
+			licount = 38;
 		};
 	});
 	msgform.onsubmit = (e) => {
@@ -476,17 +476,16 @@
 		}
 		socket.emit('message', msginput.value);
 		msginput.value = "";
-		var autoScroll = document.getElementById("chatBox");
 		autoScrol.scrollTop = autoScroll.scrollHeight;
 		console.log(messageChild);
 
 		//채팅 제거
 		var ul = document.getElementById("messages");
 		var item = ul.getElementsByTagName('li');
-		if(messageChild == 41) {
+		if(messageChild >= 40) {
 			item[0].remove();
 			item[0].remove();
-			licount = 39;
+			licount = 38;
 		};
 	};
 	</script>
