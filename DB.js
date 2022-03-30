@@ -2,7 +2,7 @@
     const host = "localhost";
     const port = 3306;
     const user= 'root'; 
-    const password = "@wjdqja1031@"
+    const password = "password"
     const database = 'login'
     
 
