@@ -441,8 +441,8 @@
 			</div>
 			<line id="MychatLine"></line>
 			<div class="prompt">
-				<textarea id="msginput" autocomplete="off" type="text" class="myChat" required></textarea>
-				<button type="submit" class="submitButton"><i class="uil uil-message"> </i></button>
+					<textarea id="msginput" autocomplete="off" type="text" class="myChat" required></textarea>
+				<button type="submit" class="submitButton" onclick="button_click();"><i class="uil uil-message"> </i></button>
 			</div>
 		</div>
 	</form>
@@ -569,4 +569,27 @@
 			licount = 1998;
 		};
 	};
+
+
+
+	$(function() {
+    $('#msginput').on('keydown', function(event) {
+        if (event.keyCode == 13)
+            if (!event.shiftKey){
+                event.preventDefault();
+                $('.submitButton').submit();
+            }
+    });
+    
+    $('.submitButton').on('submit', function() {
+        button_click();
+    });
+    
+    function button_click() {
+        console.log('message send');
+    }
+});
+
+
+
 	</script>
