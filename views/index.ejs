@@ -675,7 +675,7 @@
 
 	function dropdown() {
 		//dropdown 리스트
-		console.log('click');
+
 		var content = document.getElementsByClassName('dropdown-content')
 		if(on == 1) {
 			content[0].style.display = 'block';
@@ -711,7 +711,7 @@
 		messageList.appendChild(messageTag);
 		//li 태그 수 세기
 		autoScrol.scrollTop = autoScroll.scrollHeight;
-        console.log(messageChild);
+    
 
 		
 	});
@@ -731,7 +731,7 @@
 		messageList.appendChild(messageTag);
 		//li 태그 수 세기
 		autoScrol.scrollTop = autoScroll.scrollHeight;
-        console.log(messageChild);
+        
 
 		//채팅 제거
 		var ul = document.getElementById("messages");
@@ -749,7 +749,8 @@
 		var random_Number1 = Math.floor(Math.random() * 10)
 		var random_Number2 = Math.floor(Math.random() * 10)
 		var msginput = document.getElementById('msginput');
-		var messageList = document.getElementById('messages');
+		if(msginput.value){
+			var messageList = document.getElementById('messages');
 		var messageName = document.createElement("li");
 		var messageTag = document.createElement("li");
 		var chk = document.getElementsByClassName('anony');
@@ -764,8 +765,6 @@
 		messageList.appendChild(messageName);
 		messageTag.innerText = msginput.value;
 		messageList.appendChild(messageTag);
-		// socket.emit으로 서버에 신호를 전달
-		console.log(chk[0].checked);
 
 		//익명 설정
 		if(chk[0].checked) {
@@ -778,7 +777,7 @@
 		socket.emit('message', msginput.value);
 		msginput.value = "";
 		autoScrol.scrollTop = autoScroll.scrollHeight;
-		console.log(messageChild);
+		
 
 		//채팅 제거
 		var ul = document.getElementById("messages");
@@ -788,6 +787,8 @@
 			item[0].remove();
 			licount = 1998;
 		};
+		}
+		
 	};
 
 
@@ -806,7 +807,7 @@
     });
     
     function button_click() {
-        console.log('message send');
+
     }
 });
 
